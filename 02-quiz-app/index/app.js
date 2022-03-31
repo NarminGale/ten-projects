@@ -1,5 +1,17 @@
 const options = document.getElementById('quiz-options')
 const question = document.getElementById('question')
+const submitButton = document.getElementById('submit')
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadQuestion()
+    eventListeners()
+})
+
+function eventListeners(){
+    submitButton.addEventListener('click', checkAnswer)
+}
 
 async function loadQuestion() {
     const url = 'https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple'
@@ -25,11 +37,24 @@ function showQuestion(data){
     ).join('')
 
     console.log(data)
+    selectOption()
 }
 
-function getSelected() {
-    const answer = document.querySelector('.answer')
-    console.log(answer.value)
+function selectOption() {
+    options.querySelectorAll('li').forEach((option) => {
+        option.addEventListener('click', () =>{
+            if (options.querySelector('.selected')){
+               const activeOption = options.querySelector('.selected')
+                activeOption.classList.remove('selected')
+           }
+            option.classList.add('selected')
+        })
+    })
 }
 
-loadQuestion()
+function checkAnswer() {
+    console.log('hello')
+    if (options.querySelector('.selected')){
+
+    }
+}
