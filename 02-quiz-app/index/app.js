@@ -1,8 +1,7 @@
 const options = document.getElementById('quiz-options')
 const question = document.getElementById('question')
 const submitButton = document.getElementById('submit')
-
-
+let correctAnswer = ""
 
 document.addEventListener('DOMContentLoaded', () => {
     loadQuestion()
@@ -21,7 +20,7 @@ async function loadQuestion() {
 }
 
 function showQuestion(data){
-    let correctAnswer = data.correct_answer
+    correctAnswer = data.correct_answer
     let incorrectAnswer = data.incorrect_answers
     let optionList = incorrectAnswer
 
@@ -36,7 +35,6 @@ function showQuestion(data){
         </li>`
     ).join('')
 
-    console.log(data)
     selectOption()
 }
 
@@ -53,8 +51,18 @@ function selectOption() {
 }
 
 function checkAnswer() {
-    console.log('hello')
+    submitButton.disabled = true
     if (options.querySelector('.selected')){
-
+        let selectedAnswer = options.querySelector('.selected label').textContent
+        console.log(correctAnswer)
+        if (selectedAnswer === correctAnswer){
+            alert('Correct Answer')
+        }else{
+            alert('Incorrect Answer')
+        }
+        setTimeout(() => {
+             loadQuestion()
+            submitButton.disabled = false
+        }, 500)
     }
 }
